@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
+import '../widgets/bottom_nav_bar.dart'; // Mengimpor widget bottom navigation bar
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
+  @override
+  _DashboardScreenState createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  int _currentIndex = 0;  // Menyimpan indeks tab yang aktif
+
+  // Daftar halaman yang akan ditampilkan
+  final List<Widget> _pages = [
+    Center(child: Text('Chat Page')), // Halaman untuk tab pertama
+    Center(child: Text('Cart Page')), // Halaman untuk tab kedua
+    Center(child: Text('Profile Page')), // Halaman untuk tab ketiga
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +28,7 @@ class DashboardScreen extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
-            image: AssetImage('assets/background.jpg'), // Tambahkan background jika ada
+            image: AssetImage('assets/background.jpg'), // Gambar latar belakang
             fit: BoxFit.cover,
           ),
         ),
@@ -68,8 +83,31 @@ class DashboardScreen extends StatelessWidget {
                 },
               ),
             ),
+            // Tambahkan tab navigator di bawah
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex, // Menyimpan indeks tab yang aktif
+        onTap: (int index) {
+          setState(() {
+            _currentIndex = index;  // Memperbarui tab yang aktif
+          });
+        },
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'Chat',  // Tab pertama
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Cart',  // Tab kedua
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Profile',  // Tab ketiga
+          ),
+        ],
       ),
     );
   }
